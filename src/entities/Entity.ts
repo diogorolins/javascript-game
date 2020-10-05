@@ -4,8 +4,6 @@ abstract class Entity {
   private _x_axis: number;
   private _y_axis: number;
   private _sprite: HTMLImageElement;
-  private _sprite_x: number;
-  private _sprite_y: number;
 
   constructor() {}
 
@@ -39,20 +37,12 @@ abstract class Entity {
   set sprite(sprite: HTMLImageElement) {
     this._sprite = sprite;
   }
-  get sprite_x(): number {
-    return this._sprite_x;
-  }
-  set sprite_x(sprite_x: number) {
-    this._sprite_x = sprite_x;
-  }
-  get sprite_y(): number {
-    return this._sprite_y;
-  }
-  set sprite_y(sprite_y: number) {
-    this._sprite_y = sprite_y;
-  }
-  public abstract render(context: CanvasRenderingContext2D): void;
-  public abstract update(): void;
+
+  public abstract render(
+    context: CanvasRenderingContext2D,
+    frames: number
+  ): void;
+  public abstract update(context: CanvasRenderingContext2D): void;
 }
 
 export default Entity;

@@ -37,8 +37,8 @@ abstract class Map {
     this._canvasHeight = canvasWidth;
   }
 
-  public abstract render(context: any): void;
-  public abstract update(): void;
+  public abstract render(context: CanvasRenderingContext2D): void;
+  public abstract update(context: CanvasRenderingContext2D): void;
 }
 
 export default Map;

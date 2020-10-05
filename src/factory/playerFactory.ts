@@ -3,8 +3,7 @@ import {
   playerWidth,
   playerHeigth,
   sprite,
-  spritePosition_x,
-  spritePosition_y,
+  spritePosition,
   initialPosition_x,
   initialPosition_y,
   playerSpeed,
@@ -18,8 +17,7 @@ class playerFactory {
     player.width = playerWidth;
     player.height = playerHeigth;
     player.sprite = playerImage;
-    player.sprite_x = spritePosition_x;
-    player.sprite_y = spritePosition_y;
+    player.spritePosition = spritePosition;
     player.x_axis = initialPosition_x;
     player.y_axis = initialPosition_y;
     player.speed = playerSpeed;

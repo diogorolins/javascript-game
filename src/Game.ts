@@ -18,15 +18,20 @@ class Game {
     this._dynamicEntities = dynamicEntities;
   }
 
-  public run(): void {
-    this.render();
+  public run(frames: number): void {
+    this.render(frames);
     this.update();
   }
-  update() {}
-  render() {
+  update() {
+    this._map.update(this._context);
+    this._dynamicEntities.forEach((e) => {
+      e.update(this._context);
+    });
+  }
+  render(frames: number) {
     this._map.render(this._context);
     this._dynamicEntities.forEach((e) => {
-      e.render(this._context);
+      e.render(this._context, frames);
     });
   }
 }
