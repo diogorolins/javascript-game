@@ -17,6 +17,6 @@ export const spritePosition: any = {
     3: { x: 59, y: 19.5 },
   },
 };
-export const initialPosition_x: number = 30;
-export const initialPosition_y: number = 30;
-export const playerSpeed: number = 8;
+export const initialPosition_x: number = 500;
+export const initialPosition_y: number = 300;
+export const playerSpeed: number = 3.4;

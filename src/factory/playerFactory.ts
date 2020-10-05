@@ -13,7 +13,7 @@ class playerFactory {
   public static build(): Player {
     const playerImage = new Image();
     playerImage.src = sprite;
-    const player = new Player();
+    const player: Player = new Player();
     player.width = playerWidth;
     player.height = playerHeigth;
     player.sprite = playerImage;
@@ -21,6 +21,7 @@ class playerFactory {
     player.x_axis = initialPosition_x;
     player.y_axis = initialPosition_y;
     player.speed = playerSpeed;
+    player.originalSpeed = playerSpeed;
     return player;
   }
 }
