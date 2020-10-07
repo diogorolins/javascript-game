@@ -9,7 +9,7 @@ import {
   borderCamera,
 } from "../properties/gameProperties";
 
-class cameraFactory {
+class CameraFactory {
   static build(player: Player, map: Map): Camera {
     const camera: Camera = new Camera();
     camera.x_axys = initialCamera_x;
@@ -23,4 +23,4 @@ class cameraFactory {
   }
 }
 
-export default cameraFactory;
+export default CameraFactory;

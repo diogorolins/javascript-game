@@ -1,20 +1,49 @@
 import Entity from "./Entity";
 
 abstract class StaticEntity extends Entity {
-  private _sprite_x: number;
-  private _sprite_y: number;
+  private _color: string;
+  private _positions: any[];
 
-  get sprite_x(): number {
-    return this._sprite_x;
+  public render(context: CanvasRenderingContext2D, frames: number): void {
+    this.positions.forEach((e: any) => {
+      context.drawImage(
+        this.sprite,
+        this.x_axis,
+        this.y_axis,
+        this.spriteWidth,
+        this.spriteHeight,
+        e.x,
+        e.y,
+        e.w,
+        e.h
+      );
+    });
   }
-  set sprite_x(sprite_x: number) {
-    this._sprite_x = sprite_x;
+
+  public checkColision(x: number, y: number, width: number, height: number) {
+    let colision: boolean = false;
+    this._positions.forEach((e) => {
+      if (y < e.y + e.h && y + height > e.y && x < e.x + e.w && x + width > e.x)
+        colision = true;
+    });
+
+    return colision;
   }
-  get sprite_y(): number {
-    return this._sprite_y;
+
+  get color(): string {
+    return this._color;
   }
-  set sprite_y(sprite_y: number) {
-    this._sprite_y = sprite_y;
+
+  set color(color: string) {
+    this._color = color;
+  }
+
+  get positions(): any {
+    return this._positions;
+  }
+
+  set positions(positions: any) {
+    this._positions = positions;
   }
 }
 

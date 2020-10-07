@@ -38,7 +38,6 @@ abstract class Map {
   }
 
   public abstract render(context: CanvasRenderingContext2D): void;
-  public abstract update(context: CanvasRenderingContext2D): void;
 }
 
 export default Map;

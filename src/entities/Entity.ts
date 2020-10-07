@@ -1,12 +1,33 @@
+import StaticEntity from "./StaticEntity";
+
 abstract class Entity {
+  private _sprite: HTMLImageElement;
+  private _spriteWidth: number;
+  private _spriteHeight: number;
   private _width: number;
   private _height: number;
   private _x_axis: number;
   private _y_axis: number;
-  private _sprite: HTMLImageElement;
-
   constructor() {}
 
+  get sprite(): HTMLImageElement {
+    return this._sprite;
+  }
+  set sprite(sprite: HTMLImageElement) {
+    this._sprite = sprite;
+  }
+  get spriteWidth(): number {
+    return this._spriteWidth;
+  }
+  set spriteWidth(spriteWidth: number) {
+    this._spriteWidth = spriteWidth;
+  }
+  get spriteHeight(): number {
+    return this._spriteHeight;
+  }
+  set spriteHeight(spriteHeight: number) {
+    this._spriteHeight = spriteHeight;
+  }
   get width(): number {
     return this._width;
   }
@@ -31,18 +52,6 @@ abstract class Entity {
   set y_axis(y_axis: number) {
     this._y_axis = y_axis;
   }
-  get sprite(): HTMLImageElement {
-    return this._sprite;
-  }
-  set sprite(sprite: HTMLImageElement) {
-    this._sprite = sprite;
-  }
-
-  public abstract render(
-    context: CanvasRenderingContext2D,
-    frames: number
-  ): void;
-  public abstract update(context: CanvasRenderingContext2D): void;
 }
 
 export default Entity;

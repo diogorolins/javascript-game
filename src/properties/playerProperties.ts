@@ -1,5 +1,7 @@
-export const playerHeigth: number = 20;
-export const playerWidth: number = 20;
+export const playeSpriterHeigth: number = 20;
+export const playerSpriteWidth: number = 20;
+export const playerHeigth: number = 60;
+export const playerWidth: number = 60;
 export const sprite: string = "./src/assets/images/sprite.png";
 export const spritePosition_x: number = 0;
 export const spritePosition_y: number = 0;
@@ -17,6 +19,6 @@ export const spritePosition: any = {
     3: { x: 59, y: 19.5 },
   },
 };
-export const initialPosition_x: number = 500;
-export const initialPosition_y: number = 300;
-export const playerSpeed: number = 3.4;
+export const initialPosition_x: number = 80;
+export const initialPosition_y: number = 80;
+export const playerSpeed: number = 3;

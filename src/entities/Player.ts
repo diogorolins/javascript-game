@@ -52,12 +52,12 @@ class Player extends DynamicEntity {
       this.sprite,
       actualSpritePosition.x,
       actualSpritePosition.y,
-      this.width,
-      this.height,
+      this.spriteWidth,
+      this.spriteHeight,
       this.x_axis,
       this.y_axis,
-      this.width * 3,
-      this.height * 3
+      this.width,
+      this.height
     );
   }
 
@@ -71,27 +71,73 @@ class Player extends DynamicEntity {
     if (this._actions.ArrowLeft) this.ArrowLeft();
     if (this._actions.ArrowRight) this.ArrowRight();
 
-    if (this._actions.Control) this.Control();
+    if (this._actions.a) this.a();
     else this.speed = this._originalSpeed;
   }
 
   public ArrowUp() {
-    this.y_axis = this.y_axis - this.speed;
+    let colision: any = [];
+    let i = 0;
+    this.staticEntities.forEach((s) => {
+      colision[i] = s.checkColision(
+        this.x_axis,
+        this.y_axis - this.speed,
+        this.width,
+        this.height
+      );
+      i += 1;
+    });
+    if (!colision.includes(true)) this.y_axis = this.y_axis - this.speed;
   }
 
   public ArrowDown() {
-    this.y_axis = this.y_axis + this.speed;
+    let colision: any = [];
+    let i = 0;
+    this.staticEntities.forEach((s) => {
+      colision[i] = s.checkColision(
+        this.x_axis,
+        this.y_axis + this.speed,
+        this.width,
+        this.height
+      );
+      i += 1;
+    });
+
+    if (!colision.includes(true)) this.y_axis = this.y_axis + this.speed;
   }
   public ArrowLeft() {
-    this.x_axis = this.x_axis - this.speed;
+    let colision: any = [];
+    let i = 0;
+    this.staticEntities.forEach((s) => {
+      colision[i] = s.checkColision(
+        this.x_axis - this.speed,
+        this.y_axis,
+        this.width,
+        this.height
+      );
+      i += 1;
+    });
+
+    if (!colision.includes(true)) this.x_axis = this.x_axis - this.speed;
     this.actualDirection = "ArrowLeft";
   }
   public ArrowRight() {
-    this.x_axis = this.x_axis + this.speed;
+    let colision: any = [];
+    let i = 0;
+    this.staticEntities.forEach((s) => {
+      colision[i] = s.checkColision(
+        this.x_axis + this.speed,
+        this.y_axis,
+        this.width,
+        this.height
+      );
+      i += 1;
+    });
+    if (!colision.includes(true)) this.x_axis = this.x_axis + this.speed;
     this.actualDirection = "ArrowRight";
   }
-  public Control() {
-    this.speed = this.speed + 0.3;
+  public a() {
+    this.speed = this._originalSpeed + 2;
   }
 }
 

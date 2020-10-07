@@ -14,11 +14,13 @@ class Game {
     context: CanvasRenderingContext2D,
     map: Map,
     dynamicEntities: Array<DynamicEntity>,
+    staticcEntities: Array<StaticEntity>,
     camera: Camera
   ) {
     this._context = context;
     this._map = map;
     this._dynamicEntities = dynamicEntities;
+    this._staticEntities = staticcEntities;
     this._camera = camera;
   }
 
@@ -27,7 +29,6 @@ class Game {
     this.update();
   }
   update() {
-    this._map.update(this._context);
     this._dynamicEntities.forEach((e) => {
       e.update(this._context);
     });
@@ -37,9 +38,13 @@ class Game {
     this._context.save();
     this._context.translate(-this._camera.x_axys, -this._camera.y_axys);
     this._map.render(this._context);
+    this._staticEntities.forEach((e) => {
+      e.render(this._context, frames);
+    });
     this._dynamicEntities.forEach((e) => {
       e.render(this._context, frames);
     });
+
     this._context.restore();
   }
 }

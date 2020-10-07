@@ -1,13 +1,29 @@
 import Entity from "./Entity";
+import StaticEntity from "./StaticEntity";
 
 abstract class DynamicEntity extends Entity {
   private _speed: number;
   private _spritePosition: any;
   private _actualDirection: string = "ArrowRight";
   private _actualFrame: number = 0;
+  private _staticEntities: StaticEntity[];
 
   constructor() {
     super();
+  }
+
+  public abstract render(
+    context: CanvasRenderingContext2D,
+    frames: number
+  ): void;
+
+  public abstract update(context: CanvasRenderingContext2D): void;
+
+  get staticEntities(): StaticEntity[] {
+    return this._staticEntities;
+  }
+  set staticEntities(staticEntities: StaticEntity[]) {
+    this._staticEntities = staticEntities;
   }
 
   get speed(): number {
