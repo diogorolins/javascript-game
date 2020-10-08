@@ -10,13 +10,23 @@ import {
   playerSpeed,
   playerSpriteWidth,
   playeSpriterHeigth,
+  speedSound,
+  footStepSound,
 } from "../properties/playerProperties";
 
 class PlayerFactory {
   public static build(staticEntities: StaticEntity[]): Player {
     const playerImage = new Image();
     playerImage.src = sprite;
+
+    const playerStepSound = new Audio();
+    playerStepSound.src = footStepSound;
+    const playerSpeedSound = new Audio();
+    playerSpeedSound.src = speedSound;
+
     const player: Player = new Player();
+    player.speedSound = playerSpeedSound;
+    player.stepSound = playerStepSound;
     player.width = playerWidth;
     player.height = playerHeigth;
     player.sprite = playerImage;
@@ -28,6 +38,7 @@ class PlayerFactory {
     player.spriteHeight = playeSpriterHeigth;
     player.originalSpeed = playerSpeed;
     player.staticEntities = staticEntities;
+    player.actualDirection = "ArrowRight";
     return player;
   }
 }

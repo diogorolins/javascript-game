@@ -4,7 +4,7 @@ import StaticEntity from "./StaticEntity";
 abstract class DynamicEntity extends Entity {
   private _speed: number;
   private _spritePosition: any;
-  private _actualDirection: string = "ArrowRight";
+  private _actualDirection: string;
   private _actualFrame: number = 0;
   private _staticEntities: StaticEntity[];
 

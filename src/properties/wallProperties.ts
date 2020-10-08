@@ -5,6 +5,7 @@ export const spriteWidth: number = 60;
 export const spriteHeight: number = 60;
 export const width: number = 60;
 export const height: number = 61;
+export const soundColision = "./src/assets/sounds/wallcolision.mp3";
 
 export const positions = [
   { x: 0, y: 0, w: 2000, h: 60 },

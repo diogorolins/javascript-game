@@ -3,6 +3,7 @@ import Entity from "./Entity";
 abstract class StaticEntity extends Entity {
   private _color: string;
   private _positions: any[];
+  private _colisionSound: any;
 
   public render(context: CanvasRenderingContext2D, frames: number): void {
     this.positions.forEach((e: any) => {
@@ -23,8 +24,15 @@ abstract class StaticEntity extends Entity {
   public checkColision(x: number, y: number, width: number, height: number) {
     let colision: boolean = false;
     this._positions.forEach((e) => {
-      if (y < e.y + e.h && y + height > e.y && x < e.x + e.w && x + width > e.x)
+      if (
+        y < e.y + e.h &&
+        y + height > e.y &&
+        x < e.x + e.w &&
+        x + width > e.x
+      ) {
         colision = true;
+        //  if (this._colisionSound) this._colisionSound.play();
+      }
     });
 
     return colision;
@@ -36,6 +44,14 @@ abstract class StaticEntity extends Entity {
 
   set color(color: string) {
     this._color = color;
+  }
+
+  get colisionSound(): any {
+    return this._colisionSound;
+  }
+
+  set colisionSound(colisionSound: any) {
+    this._colisionSound = colisionSound;
   }
 
   get positions(): any {

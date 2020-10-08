@@ -8,6 +8,7 @@ import {
   spriteHeight,
   spriteWidth,
   positions,
+  soundColision,
 } from "../properties/houseProperties";
 
 class HouseFactory {
@@ -16,9 +17,14 @@ class HouseFactory {
 
     const houseImage = new Image();
     houseImage.src = sprite;
+
+    const houseSound = new Audio();
+    houseSound.src = soundColision;
+
     house.positions = positions;
     house.spriteWidth = spriteWidth;
     house.spriteHeight = spriteHeight;
+    house.colisionSound = houseSound;
     house.width = width;
     house.height = height;
     house.sprite = houseImage;

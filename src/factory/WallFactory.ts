@@ -8,15 +8,19 @@ import {
   positions,
   spriteWidth,
   spriteHeight,
+  soundColision,
 } from "../properties/wallProperties";
 
 class WallFactory {
-  private objectPixels: any[];
   public static build() {
     const wall = new Wall();
 
     const wallImage = new Image();
     wallImage.src = sprite;
+    const wallSound = new Audio();
+    wallSound.src = soundColision;
+
+    wall.colisionSound = wallSound;
     wall.positions = positions;
     wall.spriteWidth = spriteWidth;
     wall.spriteHeight = spriteHeight;

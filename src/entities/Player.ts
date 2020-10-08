@@ -2,8 +2,22 @@ import DynamicEntity from "./DynamicEntity";
 
 class Player extends DynamicEntity {
   private _actions: any = {};
-
   private _originalSpeed: number;
+  private _speedSound: any;
+  private _stepSound: any;
+
+  get stepSound(): any {
+    return this._stepSound;
+  }
+  set stepSound(stepSound: any) {
+    this._stepSound = stepSound;
+  }
+  get speedSound(): any {
+    return this._speedSound;
+  }
+  set speedSound(speedSound: any) {
+    this._speedSound = speedSound;
+  }
 
   get actions(): any {
     return this._actions;
@@ -26,6 +40,7 @@ class Player extends DynamicEntity {
     if (this.checkIfMove()) {
       if (frames % 8 === 0) {
         this.actualFrame += 1;
+        this._stepSound.play();
         if (this.actualFrame === 4) {
           this.actualFrame = 0;
         }
@@ -77,45 +92,48 @@ class Player extends DynamicEntity {
 
   public ArrowUp() {
     let colision: any = [];
-    let i = 0;
+
     this.staticEntities.forEach((s) => {
-      colision[i] = s.checkColision(
-        this.x_axis,
-        this.y_axis - this.speed,
-        this.width,
-        this.height
+      colision.push(
+        s.checkColision(
+          this.x_axis,
+          this.y_axis - this.speed,
+          this.width,
+          this.height
+        )
       );
-      i += 1;
     });
     if (!colision.includes(true)) this.y_axis = this.y_axis - this.speed;
   }
 
   public ArrowDown() {
     let colision: any = [];
-    let i = 0;
+
     this.staticEntities.forEach((s) => {
-      colision[i] = s.checkColision(
-        this.x_axis,
-        this.y_axis + this.speed,
-        this.width,
-        this.height
+      colision.push(
+        s.checkColision(
+          this.x_axis,
+          this.y_axis + this.speed,
+          this.width,
+          this.height
+        )
       );
-      i += 1;
     });
 
     if (!colision.includes(true)) this.y_axis = this.y_axis + this.speed;
   }
   public ArrowLeft() {
     let colision: any = [];
-    let i = 0;
+
     this.staticEntities.forEach((s) => {
-      colision[i] = s.checkColision(
-        this.x_axis - this.speed,
-        this.y_axis,
-        this.width,
-        this.height
+      colision.push(
+        s.checkColision(
+          this.x_axis - this.speed,
+          this.y_axis,
+          this.width,
+          this.height
+        )
       );
-      i += 1;
     });
 
     if (!colision.includes(true)) this.x_axis = this.x_axis - this.speed;
@@ -123,21 +141,23 @@ class Player extends DynamicEntity {
   }
   public ArrowRight() {
     let colision: any = [];
-    let i = 0;
+
     this.staticEntities.forEach((s) => {
-      colision[i] = s.checkColision(
-        this.x_axis + this.speed,
-        this.y_axis,
-        this.width,
-        this.height
+      colision.push(
+        s.checkColision(
+          this.x_axis + this.speed,
+          this.y_axis,
+          this.width,
+          this.height
+        )
       );
-      i += 1;
     });
     if (!colision.includes(true)) this.x_axis = this.x_axis + this.speed;
     this.actualDirection = "ArrowRight";
   }
   public a() {
-    this.speed = this._originalSpeed + 2;
+    this.speed = this._originalSpeed + 3;
+    this._speedSound.play();
   }
 }
 

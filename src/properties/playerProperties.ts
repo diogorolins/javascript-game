@@ -3,8 +3,8 @@ export const playerSpriteWidth: number = 20;
 export const playerHeigth: number = 60;
 export const playerWidth: number = 60;
 export const sprite: string = "./src/assets/images/sprite.png";
-export const spritePosition_x: number = 0;
-export const spritePosition_y: number = 0;
+export const speedSound = "./src/assets/sounds/pulo.wav";
+export const footStepSound = "./src/assets/sounds/footStep.mp3";
 export const spritePosition: any = {
   ArrowRight: {
     0: { x: 0, y: 0 },

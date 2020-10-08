@@ -5,5 +5,6 @@ export const spriteWidth: number = 98;
 export const spriteHeight: number = 98;
 export const width: number = 300;
 export const height: number = 300;
+export const soundColision = "./src/assets/sounds/ponto.wav";
 
 export const positions = [{ x: 850, y: 4040, w: 300, h: 300 }];
