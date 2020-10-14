@@ -6,48 +6,32 @@ class Player extends DynamicEntity {
   private _speedSound: any;
   private _stepSound: any;
 
-  get stepSound(): any {
-    return this._stepSound;
-  }
-  set stepSound(stepSound: any) {
-    this._stepSound = stepSound;
-  }
-  get speedSound(): any {
-    return this._speedSound;
-  }
-  set speedSound(speedSound: any) {
-    this._speedSound = speedSound;
-  }
-
-  get actions(): any {
-    return this._actions;
-  }
-  set actions(actions: any) {
-    this._actions = actions;
-  }
-
-  get originalSpeed(): number {
-    return this._originalSpeed;
-  }
-  set originalSpeed(originalSpeed: number) {
-    this._originalSpeed = originalSpeed;
-  }
-
   public render(context: CanvasRenderingContext2D, frames: number): void {
     let actualSpritePosition: any = this.spritePosition[this.actualDirection][
       this.actualFrame
     ];
+
     if (this.checkIfMove()) {
       if (frames % 8 === 0) {
-        this.actualFrame += 1;
-        this._stepSound.play();
-        if (this.actualFrame === 4) {
+        this.moveFrame();
+        this.plaStepSound();
+        this.resetFrameLoop()
+        }
+    }
+    this.draw(context, actualSpritePosition);
+  }
+
+  private resetFrameLoop() {
+     if (this.actualFrame === 4) {
           this.actualFrame = 0;
         }
-      }
-    }
+  }
+  private moveFrame(){
+     this.actualFrame += 1
+  }
 
-    this.draw(context, actualSpritePosition);
+  private plaStepSound(){
+    this._stepSound.play();
   }
 
   private checkIfMove(): boolean {
@@ -81,16 +65,16 @@ class Player extends DynamicEntity {
   }
 
   private checkActions() {
-    if (this._actions.ArrowUp) this.ArrowUp();
-    if (this._actions.ArrowDown) this.ArrowDown();
-    if (this._actions.ArrowLeft) this.ArrowLeft();
-    if (this._actions.ArrowRight) this.ArrowRight();
+    if (this._actions.ArrowUp) this.moveUp();
+    if (this._actions.ArrowDown) this.moveDown();
+    if (this._actions.ArrowLeft) this.moveLeft();
+    if (this._actions.ArrowRight) this.moveRight();
 
-    if (this._actions.a) this.a();
+    if (this._actions.a) this.increaseSpeed();
     else this.speed = this._originalSpeed;
   }
 
-  public ArrowUp() {
+  private moveUp() {
     let colision: any = [];
 
     this.staticEntities.forEach((s) => {
@@ -106,7 +90,7 @@ class Player extends DynamicEntity {
     if (!colision.includes(true)) this.y_axis = this.y_axis - this.speed;
   }
 
-  public ArrowDown() {
+  private moveDown() {
     let colision: any = [];
 
     this.staticEntities.forEach((s) => {
@@ -122,7 +106,7 @@ class Player extends DynamicEntity {
 
     if (!colision.includes(true)) this.y_axis = this.y_axis + this.speed;
   }
-  public ArrowLeft() {
+  private moveLeft() {
     let colision: any = [];
 
     this.staticEntities.forEach((s) => {
@@ -139,7 +123,8 @@ class Player extends DynamicEntity {
     if (!colision.includes(true)) this.x_axis = this.x_axis - this.speed;
     this.actualDirection = "ArrowLeft";
   }
-  public ArrowRight() {
+  
+  private moveRight() {
     let colision: any = [];
 
     this.staticEntities.forEach((s) => {
@@ -155,10 +140,26 @@ class Player extends DynamicEntity {
     if (!colision.includes(true)) this.x_axis = this.x_axis + this.speed;
     this.actualDirection = "ArrowRight";
   }
-  public a() {
+ 
+  private increaseSpeed() {
     this.speed = this._originalSpeed + 3;
     this._speedSound.play();
   }
-}
 
+  set stepSound(stepSound: any) {
+    this._stepSound = stepSound;
+  }
+
+  set speedSound(speedSound: any) {
+    this._speedSound = speedSound;
+  }
+
+  get actions(): any {
+    return this._actions;
+  }
+
+  set originalSpeed(originalSpeed: number) {
+    this._originalSpeed = originalSpeed;
+  }
+}
 export default Player;

@@ -10,51 +10,69 @@ class Camera {
   private _player: Player;
   private _map: Map;
 
-  public getLeftEdge(): number {
-    return this._x_axys + this._width * this._border;
-  }
-  public getRightEdge(): number {
-    return this._x_axys + this._width * (1 - this._border);
-  }
-  public getUpEdge(): number {
-    return this._y_axys + this._height * this._border;
-  }
-  public getDownEdge(): number {
-    return this._y_axys + this._height * (1 - this._border);
+  public move() {   
+    this.moveLeft();
+    this.moveRight();    
+    this.moveUp();    
+    this.moveDown();   
   }
 
-  public move() {
-    if (this._player.x_axis < this.getLeftEdge()) {
-      this._x_axys = this._player.x_axis - this._width * this._border;
-    }
-    if (this._player.x_axis + this._player.width > this.getRightEdge()) {
-      this._x_axys =
-        this._player.x_axis +
-        this._player.width -
-        this._width * (1 - this._border);
-    }
-    if (this._player.y_axis < this.getUpEdge()) {
-      this._y_axys = this._player.y_axis - this._height * this._border;
-    }
+  moveDown() {
     if (this._player.y_axis + this._player.height > this.getDownEdge()) {
       this._y_axys =
         this._player.y_axis +
         this._player.height -
         this._height * (1 - this._border);
     }
-
-    if (this.x_axys < 0) {
-      this.x_axys = 0;
+    if (this.y_axys + this.height > this.map.height) {
+      this.y_axys = this.map.height - this.height;
     }
-    if (this.x_axys + this.width > this.map.width) {
-      this.x_axys = this.map.width - this.width;
+  }
+
+  moveUp() {
+    if (this._player.y_axis < this.getUpEdge()) {
+      this._y_axys = this._player.y_axis - this._height * this._border;
     }
     if (this.y_axys < 0) {
       this.y_axys = 0;
     }
-    if (this.y_axys + this.height > this.map.height) {
-      this.y_axys = this.map.height - this.height;
+  }
+
+  moveRight() {
+    if (this._player.x_axis + this._player.width > this.getRightEdge()) {
+      this._x_axys =
+        this._player.x_axis +
+        this._player.width -
+        this._width * (1 - this._border);
     }
+    if (this.x_axys + this.width > this.map.width) {
+      this.x_axys = this.map.width - this.width;
+    }
+  }
+
+  public moveLeft(){
+     if (this._player.x_axis < this.getLeftEdge()) {
+      this._x_axys = this._player.x_axis - this._width * this._border;
+    }
+    if (this.x_axys < 0) {
+      this.x_axys = 0;
+    }
+  }
+
+  public getLeftEdge(): number {
+    return this._x_axys + this._width * this._border;
+  }
+
+  public getRightEdge(): number {
+    return this._x_axys + this._width * (1 - this._border);
+  }
+
+  public getUpEdge(): number {
+    return this._y_axys + this._height * this._border;
+  }
+  
+  public getDownEdge(): number {
+    return this._y_axys + this._height * (1 - this._border);
   }
 
   get map(): Map {
