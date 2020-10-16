@@ -25,21 +25,18 @@ abstract class DynamicEntity extends Entity {
   set staticEntities(staticEntities: StaticEntity[]) {
     this._staticEntities = staticEntities;
   }
-
   get speed(): number {
     return this._speed;
   }
   set speed(speed: number) {
     this._speed = speed;
   }
-
   get spritePosition(): any {
     return this._spritePosition;
   }
   set spritePosition(spritePosition: any) {
     this._spritePosition = spritePosition;
   }
-
   get actualDirection(): string {
     return this._actualDirection;
   }

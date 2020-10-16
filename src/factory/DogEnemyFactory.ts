@@ -1,4 +1,5 @@
 import DogEnemy from "../entities/DogEnemy";
+import Player from "../entities/Player";
 import StaticEntity from "../entities/StaticEntity";
 import {
   sprite,
@@ -12,7 +13,10 @@ import {
 } from "../properties/dogEnemyProperties";
 
 class DogEnemyFactory {
-  public static build(staticEntities: StaticEntity[]): DogEnemy {
+  public static build(
+    staticEntities: StaticEntity[],
+    gamePlayer: Player
+  ): DogEnemy {
     const dogImage = new Image();
     dogImage.src = sprite;
 
@@ -25,6 +29,7 @@ class DogEnemyFactory {
     dogEnemy.spriteWidth = spriteWidth;
     dogEnemy.allEnemies = initialPositions;
     dogEnemy.speed = speed;
+    dogEnemy.gamePlayer = gamePlayer;
 
     dogEnemy.staticEntities = staticEntities;
 

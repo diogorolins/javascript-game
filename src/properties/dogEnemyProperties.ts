@@ -19,14 +19,14 @@ export const spritePosition: any = {
   },
 };
 export const initialPositions: any[] = [
-  { x: 1700, y: 80, s: "-", d: "ArrowRight", f: 0 },
-  { x: 500, y: 170, s: "-", d: "ArrowRight", f: 0 },
-  { x: 400, y: 310, s: "+", d: "ArrowLeft", f: 0 },
-  { x: 1400, y: 390, s: "+", d: "ArrowLeft", f: 0 },
-  { x: 100, y: 570, s: "+", d: "ArrowLeft", f: 0 },
-  { x: 1700, y: 680, s: "+", d: "ArrowLeft", f: 0 },
-  { x: 600, y: 840, s: "+", d: "ArrowLeft", f: 0 },
-  { x: 1000, y: 910, s: "+", d: "ArrowLeft", f: 0 },
-  { x: 1800, y: 990, s: "+", d: "ArrowLeft", f: 0 },
+  { x: 1700, y: 80, signal: "-", direction: "ArrowRight", frame: 0 },
+  { x: 500, y: 170, signal: "-", direction: "ArrowRight", frame: 0 },
+  { x: 400, y: 310, signal: "+", direction: "ArrowLeft", frame: 0 },
+  { x: 1400, y: 390, signal: "+", direction: "ArrowLeft", frame: 0 },
+  { x: 100, y: 570, signal: "+", direction: "ArrowLeft", frame: 0 },
+  { x: 1700, y: 680, signal: "+", direction: "ArrowLeft", frame: 0 },
+  { x: 600, y: 840, signal: "+", direction: "ArrowLeft", frame: 0 },
+  { x: 1000, y: 910, signal: "+", direction: "ArrowLeft", frame: 0 },
+  { x: 1800, y: 990, signal: "+", direction: "ArrowLeft", frame: 0 },
 ];
 export const speed: number = 4;

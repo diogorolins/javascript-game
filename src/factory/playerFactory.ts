@@ -1,3 +1,5 @@
+import DynamicEntity from "../entities/DynamicEntity";
+import Enemy from "../entities/Enemy";
 import Player from "../entities/Player";
 import StaticEntity from "../entities/StaticEntity";
 import {
@@ -12,6 +14,7 @@ import {
   playeSpriterHeigth,
   speedSound,
   footStepSound,
+  enemyColision,
 } from "../properties/playerProperties";
 
 class PlayerFactory {
@@ -23,10 +26,13 @@ class PlayerFactory {
     playerStepSound.src = footStepSound;
     const playerSpeedSound = new Audio();
     playerSpeedSound.src = speedSound;
+    const enemyColisionSound = new Audio();
+    enemyColisionSound.src = enemyColision;
 
     const player: Player = new Player();
     player.speedSound = playerSpeedSound;
     player.stepSound = playerStepSound;
+    player.enemyColisionSound = enemyColisionSound;
     player.width = playerWidth;
     player.height = playerHeigth;
     player.sprite = playerImage;
@@ -40,6 +46,14 @@ class PlayerFactory {
     player.staticEntities = staticEntities;
     player.actualDirection = "ArrowRight";
     return player;
+  }
+
+  public static insertEnemies(
+    player: Player,
+    dynamicEntities: DynamicEntity[]
+  ) {
+    const enemies = dynamicEntities.filter((e) => typeof Enemy);
+    player.enemies = enemies;
   }
 }
 export default PlayerFactory;

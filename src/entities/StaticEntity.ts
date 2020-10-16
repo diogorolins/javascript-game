@@ -31,7 +31,6 @@ abstract class StaticEntity extends Entity {
         x + width > e.x
       ) {
         colision = true;
-        //  if (this._colisionSound) this._colisionSound.play();
       }
     });
 

@@ -11,26 +11,26 @@ class DogEnemy extends Enemy {
   }
 
   private draw(context: CanvasRenderingContext2D, frames: number): void {
-    this.allEnemies.forEach((e) => {
+    this.allEnemies.forEach((enemy) => {
       if (frames % 8 === 0) {
-        e.f += 1;
+        enemy.frame += 1;
 
-        if (e.f === 4) {
-          e.f = 0;
+        if (enemy.frame === 4) {
+          enemy.frame = 0;
         }
       }
       context.drawImage(
         this.sprite,
-        this.spritePosition[e.d][e.f].x,
-        this.spritePosition[e.d][e.f].y,
+        this.spritePosition[enemy.direction][enemy.frame].x,
+        this.spritePosition[enemy.direction][enemy.frame].y,
         this.spriteWidth,
         this.spriteHeight,
-        e.x,
-        e.y,
+        enemy.x,
+        enemy.y,
         this.width,
         this.height
       );
-      this.walk(e);
+      this.walk(enemy);
     });
   }
 
@@ -39,39 +39,65 @@ class DogEnemy extends Enemy {
   }
   public update(context: CanvasRenderingContext2D): void {}
 
-  private walk(e: any): void {
-    let colision: any = [];
+  private walk(enemy: any): void {
+    if (!this.hasAnyColision(enemy)) {
+      this.moveEnemy(enemy);
+    } else {
+      this.changeDirection(enemy);
+    }
+  }
 
+  private hasAnyColision(enemy: any) {
+    return this.haveColisionWithStaticEllements(enemy); //||
+    // this.haveColisionWithPlayer(enemy)
+  }
+
+  private haveColisionWithPlayer(enemy: any) {
+    return (
+      this.gamePlayer.x_axis + this.gamePlayer.width > enemy.x &&
+      this.gamePlayer.x_axis < enemy.x + this.width &&
+      this.gamePlayer.y_axis + this.gamePlayer.height > enemy.y &&
+      this.gamePlayer.y_axis < enemy.y + this.height
+    );
+  }
+
+  private haveColisionWithStaticEllements(enemy: any) {
+    let colision: any = [];
     this.staticEntities.forEach((s) => {
       colision.push(
         s.checkColision(
-          eval(`${e.x} ${e.s} ${this.speed}`),
-          e.y,
+          eval(`${enemy.x} ${enemy.signal} ${this.speed}`),
+          enemy.y,
           this.width,
           this.height
         )
       );
     });
-    if (!colision.includes(true)) {
-      e.x = eval(`${e.x} ${e.s} ${this.speed}`);
-    } else {
-      e.s = this.changeSign(e.s);
-      e.x = this.moveFromWall(e.x, e.s);
-      e.d = this.changeDirection(e.d);
-    }
-  }
-  private changeDirection(direction: string): string {
-    if (direction === "ArrowRight") return "ArrowLeft";
-    return "ArrowRight";
+    return colision.includes(true);
   }
 
-  private changeSign(sign: string): string {
-    if (sign === "-") return "+";
-    return "-";
+  private moveEnemy(enemy: any) {
+    enemy.x = eval(`${enemy.x} ${enemy.signal} ${this.speed}`);
   }
 
-  private moveFromWall(position: number, signal: string): void {
-    return eval(`${position} ${signal}  5`);
+  private changeDirection(enemy: DogEnemy): void {
+    this.changeSign(enemy);
+    this.moveFromWall(enemy);
+    this.changeFaceDirection(enemy);
+  }
+
+  private changeFaceDirection(enemy: any): void {
+    if (enemy.direction === "ArrowRight") enemy.direction = "ArrowLeft";
+    else enemy.direction = "ArrowRight";
+  }
+
+  private changeSign(enemy: any): void {
+    if (enemy.signal === "-") enemy.signal = "+";
+    else enemy.signal = "-";
+  }
+
+  private moveFromWall(enemy: any): void {
+    enemy.x = eval(`${enemy.x} ${enemy.signal}  5`);
   }
 }
 
