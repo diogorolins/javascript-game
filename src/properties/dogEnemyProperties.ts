@@ -4,6 +4,7 @@ export const heigth: number = 60;
 export const width: number = 60;
 export const sprite: string = "./src/assets/images/sprite.png";
 export const stepSound = "./src/assets/sounds/enemyStep.mp3";
+export const damage = 60;
 export const spritePosition: any = {
   ArrowRight: {
     0: { x: 79, y: 0 },
@@ -18,6 +19,7 @@ export const spritePosition: any = {
     3: { x: 139.5, y: 20 },
   },
 };
+
 export const initialPositions: any[] = [
   { x: 1700, y: 80, signal: "-", direction: "ArrowRight", frame: 0 },
   { x: 500, y: 170, signal: "-", direction: "ArrowRight", frame: 0 },

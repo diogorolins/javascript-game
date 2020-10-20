@@ -1,3 +1,4 @@
+import DogEnemy from "./entities/DogEnemy";
 import DynamicEntity from "./entities/DynamicEntity";
 import StaticEntity from "./entities/StaticEntity";
 import CameraFactory from "./factory/CameraFactory";
@@ -29,6 +30,7 @@ const commands: IListner = new KeyBoardListner();
 
 const canvas = buildCanvas();
 const context: CanvasRenderingContext2D = canvas.getContext("2d");
+
 const map = MapFactory.build();
 
 const wall = WallFactory.build();
@@ -36,8 +38,12 @@ const house = HouseFactory.build();
 staticEnities.push(wall, house);
 
 const gamePlayer = PlayerFactory.build(staticEnities);
-const dogEnemy = DogEnemyFactory.build(staticEnities, gamePlayer);
-dynamicEnities.push(dogEnemy);
+const dogEnemy: DogEnemy[] = <DogEnemy[]>(
+  DogEnemyFactory.build(staticEnities, gamePlayer)
+);
+dogEnemy.forEach((e: DogEnemy) => {
+  dynamicEnities.push(e);
+});
 
 PlayerFactory.insertEnemies(gamePlayer, dynamicEnities);
 
@@ -60,6 +66,7 @@ commands.listen(gamePlayer);
 function initGame() {
   game.run(frames);
   frames += 1;
+
   requestAnimationFrame(initGame);
 }
 

@@ -2,6 +2,25 @@ import Enemy from "./Enemy";
 
 class DogEnemy extends Enemy {
   private _stepSound: any;
+  private _direction: string;
+  private _signal: string;
+  private frame = 0;
+
+  get signal(): string {
+    return this._signal;
+  }
+
+  set signal(signal: string) {
+    this._signal = signal;
+  }
+
+  get direction(): string {
+    return this._direction;
+  }
+
+  set direction(direction: string) {
+    this._direction = direction;
+  }
 
   get stepSound(): any {
     return this._stepSound;
@@ -11,63 +30,60 @@ class DogEnemy extends Enemy {
   }
 
   private draw(context: CanvasRenderingContext2D, frames: number): void {
-    this.allEnemies.forEach((enemy) => {
-      if (frames % 8 === 0) {
-        enemy.frame += 1;
+    if (frames % 8 === 0) {
+      this.frame += 1;
 
-        if (enemy.frame === 4) {
-          enemy.frame = 0;
-        }
+      if (this.frame === 4) {
+        this.frame = 0;
       }
-      context.drawImage(
-        this.sprite,
-        this.spritePosition[enemy.direction][enemy.frame].x,
-        this.spritePosition[enemy.direction][enemy.frame].y,
-        this.spriteWidth,
-        this.spriteHeight,
-        enemy.x,
-        enemy.y,
-        this.width,
-        this.height
-      );
-      this.walk(enemy);
-    });
+    }
+    context.drawImage(
+      this.sprite,
+      this.spritePosition[this._direction][this.frame].x,
+      this.spritePosition[this._direction][this.frame].y,
+      this.spriteWidth,
+      this.spriteHeight,
+      this.x_axis,
+      this.y_axis,
+      this.width,
+      this.height
+    );
+    this.walk();
   }
 
   public render(context: CanvasRenderingContext2D, frames: number): void {
     this.draw(context, frames);
   }
-  public update(context: CanvasRenderingContext2D): void {}
+  public update(context: CanvasRenderingContext2D, frames: number): void {}
 
-  private walk(enemy: any): void {
-    if (!this.hasAnyColision(enemy)) {
-      this.moveEnemy(enemy);
+  private walk(): void {
+    if (!this.hasAnyColision()) {
+      this.moveEnemy();
     } else {
-      this.changeDirection(enemy);
+      this.changeDirection();
     }
   }
 
-  private hasAnyColision(enemy: any) {
-    return this.haveColisionWithStaticEllements(enemy); //||
-    // this.haveColisionWithPlayer(enemy)
+  private hasAnyColision() {
+    return this.haveColisionWithStaticEllements();
   }
 
-  private haveColisionWithPlayer(enemy: any) {
+  private haveColisionWithPlayer() {
     return (
-      this.gamePlayer.x_axis + this.gamePlayer.width > enemy.x &&
-      this.gamePlayer.x_axis < enemy.x + this.width &&
-      this.gamePlayer.y_axis + this.gamePlayer.height > enemy.y &&
-      this.gamePlayer.y_axis < enemy.y + this.height
+      this.gamePlayer.x_axis + this.gamePlayer.width > this.x_axis &&
+      this.gamePlayer.x_axis < this.x_axis + this.width &&
+      this.gamePlayer.y_axis + this.gamePlayer.height > this.y_axis &&
+      this.gamePlayer.y_axis < this.y_axis + this.height
     );
   }
 
-  private haveColisionWithStaticEllements(enemy: any) {
+  private haveColisionWithStaticEllements() {
     let colision: any = [];
     this.staticEntities.forEach((s) => {
       colision.push(
         s.checkColision(
-          eval(`${enemy.x} ${enemy.signal} ${this.speed}`),
-          enemy.y,
+          eval(`${this.x_axis} ${this._signal} ${this.speed}`),
+          this.y_axis,
           this.width,
           this.height
         )
@@ -76,28 +92,28 @@ class DogEnemy extends Enemy {
     return colision.includes(true);
   }
 
-  private moveEnemy(enemy: any) {
-    enemy.x = eval(`${enemy.x} ${enemy.signal} ${this.speed}`);
+  private moveEnemy() {
+    this.x_axis = eval(`${this.x_axis} ${this._signal} ${this.speed}`);
   }
 
-  private changeDirection(enemy: DogEnemy): void {
-    this.changeSign(enemy);
-    this.moveFromWall(enemy);
-    this.changeFaceDirection(enemy);
+  private changeDirection(): void {
+    this.changeSign();
+    this.moveFromWall();
+    this.changeFaceDirection();
   }
 
-  private changeFaceDirection(enemy: any): void {
-    if (enemy.direction === "ArrowRight") enemy.direction = "ArrowLeft";
-    else enemy.direction = "ArrowRight";
+  private changeFaceDirection(): void {
+    if (this._direction === "ArrowRight") this._direction = "ArrowLeft";
+    else this._direction = "ArrowRight";
   }
 
-  private changeSign(enemy: any): void {
-    if (enemy.signal === "-") enemy.signal = "+";
-    else enemy.signal = "-";
+  private changeSign(): void {
+    if (this._signal === "-") this._signal = "+";
+    else this._signal = "-";
   }
 
-  private moveFromWall(enemy: any): void {
-    enemy.x = eval(`${enemy.x} ${enemy.signal}  5`);
+  private moveFromWall(): void {
+    this.x_axis = eval(`${this.x_axis} ${this._signal}  5`);
   }
 }
 

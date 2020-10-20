@@ -30,12 +30,12 @@ class Game {
 
   public run(frames: number): void {
     this.render(frames);
-    this.update();
+    this.update(frames);
   }
-  update() {
-    this._player.update(this._context);
+  update(frames: number) {
+    this._player.update(this._context, frames);
     this._dynamicEntities.forEach((e) => {
-      e.update(this._context);
+      e.update(this._context, frames);
     });
     this._camera.move();
   }
@@ -47,10 +47,11 @@ class Game {
     this._staticEntities.forEach((e) => {
       e.render(this._context, frames);
     });
+    this._player.render(this._context, frames);
+
     this._dynamicEntities.forEach((e) => {
       e.render(this._context, frames);
     });
-    this._player.render(this._context, frames);
     this._context.restore();
   }
 }

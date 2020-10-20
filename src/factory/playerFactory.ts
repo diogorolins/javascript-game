@@ -15,6 +15,7 @@ import {
   speedSound,
   footStepSound,
   enemyColision,
+  energy,
 } from "../properties/playerProperties";
 
 class PlayerFactory {
@@ -45,6 +46,8 @@ class PlayerFactory {
     player.originalSpeed = playerSpeed;
     player.staticEntities = staticEntities;
     player.actualDirection = "ArrowRight";
+    player.energy = energy;
+
     return player;
   }
 
@@ -52,7 +55,9 @@ class PlayerFactory {
     player: Player,
     dynamicEntities: DynamicEntity[]
   ) {
-    const enemies = dynamicEntities.filter((e) => typeof Enemy);
+    const enemies: Enemy[] = <Enemy[]>(
+      dynamicEntities.filter((e) => typeof Enemy)
+    );
     player.enemies = enemies;
   }
 }

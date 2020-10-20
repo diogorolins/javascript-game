@@ -1,4 +1,5 @@
 import DynamicEntity from "./DynamicEntity";
+import Enemy from "./Enemy";
 
 class Player extends DynamicEntity {
   private _actions: any = {};
@@ -6,11 +7,14 @@ class Player extends DynamicEntity {
   private _speedSound: any;
   private _stepSound: any;
   private _enemyColisionSound: any;
-  private _enemies: any[];
+  private _enemies: Enemy[];
+  private _energy: number;
+  private hit: boolean = true;
+  private dead: boolean = false;
 
   public render(context: CanvasRenderingContext2D, frames: number): void {
     let actualSpritePosition: any = this.spritePosition[this.actualDirection][
-      this.actualFrame
+      this.dead ? 5 : this.actualFrame
     ];
 
     if (this.checkIfMove()) {
@@ -56,14 +60,35 @@ class Player extends DynamicEntity {
       this.width,
       this.height
     );
+
+    this.drawPlayerEnergy(context);
   }
 
-  public update(context: CanvasRenderingContext2D): void {
+  drawPlayerEnergy(context: CanvasRenderingContext2D) {
+    context.beginPath();
+    context.fillStyle = "red";
+    context.rect(780, 10, 200, 40);
+    context.fill();
+    context.beginPath();
+    context.fillStyle = "green";
+    context.rect(780, 10, this._energy, 40);
+    context.fill();
+  }
+
+  public update(context: CanvasRenderingContext2D, frames: number): void {
+    this.checkIfEnemyCanHitAgain(frames);
+
     if (this.checkEnemiesColision()) {
       this.actualFrame = 4;
       this.playSound(this._enemyColisionSound);
     }
+
     this.checkActions();
+  }
+  checkIfEnemyCanHitAgain(frames: number) {
+    if (frames % 150 === 0) {
+      this.hit = true;
+    }
   }
 
   private checkActions() {
@@ -109,21 +134,32 @@ class Player extends DynamicEntity {
   }
 
   private checkEnemiesColision() {
-    const colision = this._enemies.map((e) => {
-      return e.allEnemies.filter((enemy: any) => {
-        return this.checkColisionWithEachEnemy(enemy);
-      });
+    const colision = this._enemies.filter((e: Enemy) => {
+      return this.checkColisionWithEachEnemy(e);
     });
 
-    return colision[0].length;
+    if (colision.length && this.hit) {
+      this.decreasePlayerEnergy(colision);
+    }
+
+    return colision.length;
+  }
+
+  private decreasePlayerEnergy(enemy: Enemy[]) {
+    this._energy -= enemy[0].damage;
+    if (this._energy < 0) {
+      this._energy = 0;
+      this.dead = true;
+    }
+    this.hit = false;
   }
 
   private checkColisionWithEachEnemy(enemy: any) {
     return (
-      this.x_axis + this.width > enemy.x &&
-      this.x_axis < enemy.x + this.width &&
-      this.y_axis + this.height > enemy.y &&
-      this.y_axis < enemy.y + this.height
+      this.x_axis + this.width > enemy.x_axis &&
+      this.x_axis < enemy.x_axis + this.width &&
+      this.y_axis + this.height > enemy.y_axis &&
+      this.y_axis < enemy.y_axis + this.height
     );
   }
 
@@ -162,6 +198,14 @@ class Player extends DynamicEntity {
 
   set enemies(enemies: any[]) {
     this._enemies = enemies;
+  }
+
+  get energy(): number {
+    return this._energy;
+  }
+
+  set energy(energy: number) {
+    this._energy = energy;
   }
 }
 export default Player;

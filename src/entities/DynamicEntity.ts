@@ -17,7 +17,10 @@ abstract class DynamicEntity extends Entity {
     frames: number
   ): void;
 
-  public abstract update(context: CanvasRenderingContext2D): void;
+  public abstract update(
+    context: CanvasRenderingContext2D,
+    frames: number
+  ): void;
 
   get staticEntities(): StaticEntity[] {
     return this._staticEntities;
