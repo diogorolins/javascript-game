@@ -2,7 +2,7 @@ import DogEnemy from "./entities/DogEnemy";
 import DynamicEntity from "./entities/DynamicEntity";
 import StaticEntity from "./entities/StaticEntity";
 import CameraFactory from "./factory/CameraFactory";
-import DogEnemyFactory from "./factory/dogEnemyFactory";
+import DogEnemyFactory from "./factory/DogEnemyFactory";
 import HouseFactory from "./factory/HouseFactory";
 import MapFactory from "./factory/MapFactory";
 import PlayerFactory from "./factory/PlayerFactory";
