@@ -12,24 +12,20 @@ import IListner from "./inputs/IListner";
 import KeyBoardListner from "./inputs/KeyBoardListner";
 import { gameWidth, gameHeight } from "./properties/gameProperties";
 
+const dynamicEnities: Array<DynamicEntity> = [];
+const staticEnities: Array<StaticEntity> = [];
 const button: HTMLButtonElement = <HTMLButtonElement>(
   document.getElementById("buttonStart")
 );
+let frames: number = 0;
+const commands: IListner = new KeyBoardListner();
+const context: CanvasRenderingContext2D = buildCanvas().getContext("2d");
 
 button.addEventListener("click", (event) => {
   playGameSound();
   initGame();
   button.disabled = true;
 });
-
-const dynamicEnities: Array<DynamicEntity> = [];
-const staticEnities: Array<StaticEntity> = [];
-
-let frames: number = 0;
-const commands: IListner = new KeyBoardListner();
-
-const canvas = buildCanvas();
-const context: CanvasRenderingContext2D = canvas.getContext("2d");
 
 const map = MapFactory.build();
 
@@ -58,19 +54,17 @@ const game: Game = new Game(
   camera
 );
 
-const music = new Audio();
-music.src = "./src/assets/sounds/music.mp3";
-
 commands.listen(gamePlayer);
 
 function initGame() {
   game.run(frames);
   frames += 1;
-
   requestAnimationFrame(initGame);
 }
 
 function playGameSound() {
+  const music = new Audio();
+  music.src = "./src/assets/sounds/music.mp3";
   music.addEventListener("canplaythrough", (event) => {});
   music.loop = true;
   music.play();

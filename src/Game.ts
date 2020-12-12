@@ -52,6 +52,9 @@ class Game {
     this._dynamicEntities.forEach((e) => {
       e.render(this._context, frames);
     });
+
+    console.log(this._player.dead);
+
     this._context.restore();
   }
 }

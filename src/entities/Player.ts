@@ -10,11 +10,11 @@ class Player extends DynamicEntity {
   private _enemies: Enemy[];
   private _energy: number;
   private hit: boolean = true;
-  private dead: boolean = false;
+  private _dead: boolean = false;
 
   public render(context: CanvasRenderingContext2D, frames: number): void {
     let actualSpritePosition: any = this.spritePosition[this.actualDirection][
-      this.dead ? 5 : this.actualFrame
+      this._dead ? 5 : this.actualFrame
     ];
 
     if (this.checkIfMove()) {
@@ -149,7 +149,7 @@ class Player extends DynamicEntity {
     this._energy -= enemy[0].damage;
     if (this._energy < 0) {
       this._energy = 0;
-      this.dead = true;
+      this._dead = true;
     }
     this.hit = false;
   }
@@ -206,6 +206,10 @@ class Player extends DynamicEntity {
 
   set energy(energy: number) {
     this._energy = energy;
+  }
+
+  get dead(): boolean {
+    return this._dead;
   }
 }
 export default Player;
